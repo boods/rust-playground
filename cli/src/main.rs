@@ -1,4 +1,6 @@
-use patterns::{Action, ActionBuffer, Interpreter, JumpAction, RunAction, ShootAction};
+use patterns::{
+    Action, ActionBuffer, Interpreter, JumpAction, Milliseconds, RunAction, ShootAction,
+};
 
 fn demo_command() {
     let mut buffer = ActionBuffer::new();
@@ -20,7 +22,13 @@ fn demo_interpreter() {
     println!("Interpreter Pattern: {:?}", buffer.execute());
 }
 
+fn demo_newtype() {
+    let value = Milliseconds::new(1000);
+    println!("Newtype Patterm: {}", value);
+}
+
 fn main() {
     demo_command();
     demo_interpreter();
+    demo_newtype();
 }
