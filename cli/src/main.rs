@@ -1,5 +1,6 @@
 use patterns::{
-    Action, ActionBuffer, Interpreter, JumpAction, Milliseconds, RunAction, ShootAction,
+    Action, ActionBuffer, Interpreter, JumpAction, LogFormatter, LogMessage, Milliseconds,
+    RedactedFormatter, RunAction, ShootAction, SimpleFormatter,
 };
 
 fn demo_command() {
@@ -27,8 +28,33 @@ fn demo_newtype() {
     println!("Newtype Patterm: {}", value);
 }
 
+fn demo_strategy() {
+    let formatters: Vec<Box<dyn LogFormatter>> = vec![
+        Box::new(SimpleFormatter),
+        Box::new(RedactedFormatter::new(&vec!["password".to_string()])),
+    ];
+
+    let mut message = LogMessage(Vec::new());
+    message.0.push(("username".to_string(), "phil".to_string()));
+    message
+        .0
+        .push(("password".to_string(), "password123".to_string()));
+
+    let mut simple_output = String::new();
+    formatters[0].format(&message, &mut simple_output);
+
+    let mut redacted_output = String::new();
+    formatters[1].format(&message, &mut redacted_output);
+
+    println!(
+        "Strategy Pattern: Simple Formatter={} Redacted Formatter={}",
+        simple_output, redacted_output
+    );
+}
+
 fn main() {
     demo_command();
     demo_interpreter();
     demo_newtype();
+    demo_strategy();
 }
