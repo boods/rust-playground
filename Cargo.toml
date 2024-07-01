@@ -1,6 +1,7 @@
 [workspace]
 
-members = [
-    "cli",
-    "patterns",
+members = [ 
+    "cli-apps/grrs",
+    "design-patterns/cli",
+    "design-patterns/patterns",
 ]
