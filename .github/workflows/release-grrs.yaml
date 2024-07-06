@@ -1,0 +1,40 @@
+name: Release grrs
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    name: Build and Release grrs CLI
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+          - os: macos-latest
+            target: x86_64-apple-darwin
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        profile: minimal
+        override: true
+        target: ${{ matrix.target }}
+
+    - name: Build grrs CLI binary
+      run: cargo build --release --target ${{ matrix.target }}
+
+    - name: Upload grrs CLI binary
+      uses: actions/upload-artifact@v2
+      with:
+        name: grrs-${{ matrix.target }}
+        path: target/${{ matrix.target }}/release/grrs
