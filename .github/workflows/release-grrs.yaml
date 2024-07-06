@@ -2,8 +2,13 @@ name: Release grrs
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # push:
+  #   tags:
+  #     - 'v*'
 
 jobs:
   build:
@@ -61,9 +66,9 @@ jobs:
           echo "ASSET=$dirname.tar.gz" >> $GITHUB_ENV
         fi
 
-    - name: Upload grrs CLI binary
-      uses: actions/upload-artifact@v2
-      with:
-        name: ${{ env.ASSET }}
-        path: ""
+    # - name: Upload grrs CLI binary
+    #   uses: actions/upload-artifact@v2
+    #   with:
+    #     name: ${{ env.ASSET }}
+    #     path: ""
  
