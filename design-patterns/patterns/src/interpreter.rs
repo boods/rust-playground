@@ -35,7 +35,7 @@ impl<'a> Interpreter<'a> {
             match state {
                 InterpreterState::SeekingToken => match ch {
                     ch if ch.is_whitespace() => continue,
-                    ch if ch == ',' => panic!("Expected token start but found delimiter"),
+                    ',' => panic!("Expected token start but found delimiter"),
                     ch => {
                         self.next_token.push(ch);
                         state = InterpreterState::ReadingToken;
@@ -46,7 +46,7 @@ impl<'a> Interpreter<'a> {
                         self.interpret_next_token(output);
                         state = InterpreterState::SeekingDelimiter;
                     }
-                    ch if ch == ',' => {
+                    ',' => {
                         self.interpret_next_token(output);
                         state = InterpreterState::SeekingToken;
                     }
@@ -54,7 +54,7 @@ impl<'a> Interpreter<'a> {
                 },
                 InterpreterState::SeekingDelimiter => match ch {
                     ch if ch.is_whitespace() => continue,
-                    ch if ch == ',' => {
+                    ',' => {
                         state = InterpreterState::SeekingToken;
                     }
                     ch => panic!("Expected delimiter but found other character {}", ch),

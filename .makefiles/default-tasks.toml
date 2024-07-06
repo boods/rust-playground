@@ -1,0 +1,30 @@
+
+[env]
+CARGO_MAKE_EXTEND_WORKSPACE_MAKEFILE = true
+CARGO_FEATURE_ARG = { value = "--all-features", condition = { env_not_set = ["CARGO_FEATURE_ARG"] } }
+
+[tasks.default-build]
+command = "cargo"
+args = ["build", "${CARGO_FEATURE_ARG}"]
+
+[tasks.default-format]
+install_crate = "rustfmt"
+command = "cargo"
+args = ["fmt", "--", "--emit=files"]
+
+[tasks.default-clippy]
+command = "cargo"
+args = [
+  "clippy",
+  "${CARGO_FEATURE_ARG}",
+  "--fix",
+  "--broken-code",
+  "--allow-dirty",
+  "--allow-staged",
+  "--no-deps",
+  "--allow-no-vcs",
+]
+
+[tasks.default-test]
+command = "cargo"
+args = ["test", "--no-run", "--all-targets", "--all-features"]

@@ -27,6 +27,12 @@ pub struct ActionBuffer {
     actions: Vec<Box<dyn Action>>,
 }
 
+impl Default for ActionBuffer {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl ActionBuffer {
     pub fn new() -> Self {
         Self { actions: vec![] }
