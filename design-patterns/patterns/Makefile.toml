@@ -1,0 +1,10 @@
+extend = [{ path = "../../.makefiles/default-tasks.toml" }]
+
+[tasks.default]
+clear = true
+dependencies = [
+  "default-clippy",
+  "default-format",
+  "default-build",
+  "default-test",
+]

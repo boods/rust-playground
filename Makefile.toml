@@ -1,0 +1,4 @@
+extend = [{ path = "./.makefiles/default-tasks.toml" }]
+
+[tasks.default]
+alias = "all"
