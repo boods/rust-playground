@@ -61,9 +61,8 @@ jobs:
           echo "ASSET=$dirname.tar.gz" >> $GITHUB_ENV
         fi
 
-    - name: Upload grrs CLI binary
-      uses: actions/upload-artifact@v2
+    - name: Release
+      uses: softprops/action-gh-release@v1
       with:
-        name: ${{ env.ASSET }}
-        path: ${{ env.ASSET }}
- 
+        files: |
+          ${{ env.ASSET }}
