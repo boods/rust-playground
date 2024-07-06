@@ -21,11 +21,6 @@ struct Cli {
 /// On successful execution, returns `Ok(())`.
 fn main() -> Result<()> {
     let args = Cli::parse();
-    let github_event = std::env::var("GITHUB_EVENT_NAME").unwrap_or_default();
-    if github_event == "push" || github_event == "pull_request" {
-        run_ci(&args)?;
-    }
-
     let content = std::fs::read_to_string(&args.path)
         .with_context(|| format!("could not read file `{}`", args.path.display()))?;
 
